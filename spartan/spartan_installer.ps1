@@ -54,4 +54,6 @@ Copy-Item .\resources\settings\Microsoft.PowerShell_profile.ps1 -Destination $Pr
 # TODO: generate new profile guid and replace it with the one in copied settings.json (under 'defaultProfile')
 # $ProfileGuid = [guid]::NewGuid()
 
+# TODO: copy and override settings.json of vs code to right path (or set font of integrated terminal)
+
 # ::END

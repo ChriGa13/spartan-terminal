@@ -1,0 +1,27 @@
+{
+    "workbench.colorTheme": "Visual Studio 2019 Dark",
+    "editor.fontFamily": "Fira Code",
+    "editor.fontLigatures": true,
+    "terminal.integrated.fontFamily": "MesloLGM NF",
+    "workbench.iconTheme": "vscode-icons",
+    "gitlens.gitCommands.closeOnFocusOut": true,
+    "settingsSync.ignoredSettings": [],
+    "settingsSync.ignoredExtensions": [],
+    "liveshare.allowGuestDebugControl": true,
+    "liveshare.allowGuestTaskControl": true,
+    "liveshare.languages.allowGuestCommandControl": true,
+    "angular.experimental-ivy": true,
+    "[dart]": {
+        "editor.formatOnSave": true,
+        "editor.formatOnType": true,
+        "editor.rulers": [
+            80
+        ],
+        "editor.selectionHighlight": false,
+        "editor.suggest.snippetsPreventQuickSuggestions": false,
+        "editor.suggestSelection": "first",
+        "editor.tabCompletion": "onlySnippets",
+        "editor.wordBasedSuggestions": false
+    },
+    "window.zoomLevel": -1,
+}
