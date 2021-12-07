@@ -10,6 +10,7 @@ If(-NOT([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity
 # Set config paths
 $SettingsPath = "C:\Users\chris\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState"
 $ProfilePath = "C:\Users\chris\OneDrive\Private\Documents\WindowsPowerShell"
+$ProfilePathPS7 = "C:\Program Files\PowerShell\7"
 
 # Installing necessary modules
 Install-Module posh-git -Scope AllUsers
@@ -43,6 +44,9 @@ foreach($font in Get-ChildItem -Path $fontsFolder -File)
     }
 }
 
+# Install latest powershell version
+iex "& { $(irm https://aka.ms/install-powershell.ps1) } -UseMSI -Quiet"
+
 # Copy / replace settings.json in windows terminal installation folder
 Copy-Item .\resources\settings\settings.json -Destination $SettingsPath -force
 
@@ -50,10 +54,18 @@ Copy-Item .\resources\settings\settings.json -Destination $SettingsPath -force
 Test-Path $PROFILE
 New-Item -Type File -Force $PROFILE
 Copy-Item .\resources\settings\Microsoft.PowerShell_profile.ps1 -Destination $ProfilePath -force
+Copy-Item .\resources\settings\Microsoft.PowerShell_profile.ps1 -Destination $ProfilePathPS7 -force
 
-# TODO: generate new profile guid and replace it with the one in copied settings.json (under 'defaultProfile')
-# $ProfileGuid = [guid]::NewGuid()
+# Generate new profile guid and replace it with the one in copied settings.json (under 'defaultProfile')
+$ProfileGuid = [guid]::NewGuid()
+((Get-Content -path "$SettingsPath\settings.json" -Raw) -replace 'insert-profile-guid-here',$ProfileGuid) | Set-Content -Path "$SettingsPath\settings.json"
 
-# TODO: copy and override settings.json of vs code to right path (or set font of integrated terminal)
+# Copy and override settings.json of vs code to right path (or set font of integrated terminal)
+$VSCodeSettingsFile = 'C:\Users\chris\AppData\Roaming\Code\User\settings.json'
+
+$VSCodeSettings = Get-Content $VSCodeSettingsFile | Out-String | ConvertFrom-Json
+$VSCodeSettings | Add-Member -Type NoteProperty -Name 'terminal.integrated.fontFamily' -Value 'MesloLGM NF'
+
+$VSCodeSettings | ConvertTo-Json | Set-Content $VSCodeSettingsFile
 
 # ::END
